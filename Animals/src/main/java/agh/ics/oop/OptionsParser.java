@@ -10,7 +10,7 @@ public class OptionsParser {
 //        for (String arg : args) {
 //            if (arg.equals("f") || arg.equals("b") || arg.equals("l") || arg.equals("r")) {n++;}
 //        }
-        MoveDirection[] Directions = new MoveDirection[args.length];
+        MoveDirection[] directions = new MoveDirection[args.length];
 
         int i = 0;
         for (String arg : args) {
@@ -23,12 +23,12 @@ public class OptionsParser {
             };
 
             if (value != null) {
-                Directions[i] = value;
+                directions[i] = value;
                 i++;
             }
         }
 //        return Directions
-        return Arrays.copyOfRange(Directions, 0, i);
+        return Arrays.copyOfRange(directions, 0, i);
     }
 }
 

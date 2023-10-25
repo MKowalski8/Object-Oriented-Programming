@@ -11,11 +11,11 @@ public class World {
         System.out.println("System zakonczyl dzialanie");
     }
 
-    private static void run(MoveDirection[] Directions) {
+    private static void run(MoveDirection[] directions) {
 //        System.out.println("Zwierzak idzie do przodu");
 
 //        Checking if the program gives the right output
-        for (MoveDirection direction : Directions) {
+        for (MoveDirection direction : directions) {
             String message = switch (direction) {
                 case FORWARD -> "Zwierzak idzie do przodu";
                 case BACKWARD -> "Zwierzak idzie do tylu";
