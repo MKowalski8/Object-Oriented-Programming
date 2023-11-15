@@ -10,14 +10,18 @@ import java.util.List;
 
 
 public class Simulation {
-    private List<Animal> animals = new ArrayList<>();
-    private List<MoveDirection> directions;
+    private final List<Animal> animals = new ArrayList<>();
+    private final List<MoveDirection> directions;
 
     public Simulation(List<Vector2d> positions, List<MoveDirection> directions) {
-        for (Vector2d position : positions) {
-            animals.add(new Animal(position.getX(), position.getY()));
-        }
+        createAnimals(positions);
         this.directions = directions;
+    }
+
+    private void createAnimals(List<Vector2d> positions) {
+        for (Vector2d position : positions) {
+            animals.add(new Animal(position));
+        }
     }
 
     public void run() {

@@ -17,7 +17,7 @@ class AnimalTest {
         Vector2d positionCorrectY = new Vector2d(0,4);
 
         //when
-        Animal animal = new Animal(2,4);
+        Animal animal = new Animal(new Vector2d(2,4));
 
         //then
         assertTrue(animal.isAt(positionCorrect));
@@ -29,11 +29,11 @@ class AnimalTest {
     void animalCanMove(){
         //given
         Animal animal1 = new Animal();
-        Animal animal2 = new Animal(3,2);
-        Animal animal3 = new Animal(1,0);
-        Animal animal4 = new Animal(3,4);
-        Animal animal5 = new Animal(1,2);
-        Animal animal6 = new Animal(4,1);
+        Animal animal2 = new Animal(new Vector2d(3,2));
+        Animal animal3 = new Animal(new Vector2d(1,0));
+        Animal animal4 = new Animal(new Vector2d(3,4));
+        Animal animal5 = new Animal(new Vector2d(1,2));
+        Animal animal6 = new Animal(new Vector2d(4,1));
 
         //when
         animal1.move(MoveDirection.RIGHT);

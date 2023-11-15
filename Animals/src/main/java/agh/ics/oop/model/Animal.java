@@ -1,17 +1,18 @@
 package agh.ics.oop.model;
 
 public class Animal {
+    public static final Vector2d UPPER_EDGE = new Vector2d(4, 4);
+    public static final Vector2d LOWER_EDGE = new Vector2d(0, 0);
     private MapDirection orientation;
     private Vector2d position;
 
     public Animal() {
-        this.orientation = MapDirection.NORTH;
-        this.position = new Vector2d(2, 2);
+        this(new Vector2d(2,2));
     }
 
-    public Animal(int x, int y) {
+    public Animal(Vector2d position) {
         this.orientation = MapDirection.NORTH;
-        this.position = new Vector2d(x, y);
+        this.position = position;
     }
 
     public String toString() {
@@ -29,23 +30,22 @@ public class Animal {
     public Vector2d getPosition() {
         return position;
     }
-
+    
     public void move(MoveDirection direction) {
-        switch (direction) {
-            case RIGHT -> orientation = orientation.next();
-            case LEFT -> orientation = orientation.previous();
-            case FORWARD -> {
-                Vector2d newPosition = position.add(orientation.toUnitVector());
-                if (newPosition.precedes(new Vector2d(4, 4)) && newPosition.follows(new Vector2d(0, 0))) {
-                    position = newPosition;
-                }
-            }
-            case BACKWARD -> {
-                Vector2d newPosition = position.add(orientation.toUnitVector().opposite());
-                if (newPosition.precedes(new Vector2d(4, 4)) && newPosition.follows(new Vector2d(0, 0))) {
-                    position = newPosition;
-                }
-            }
+        orientation = switch(direction){
+            case RIGHT -> orientation.next();
+            case LEFT -> orientation.previous();
+            case FORWARD, BACKWARD -> orientation;
+        };
+
+        Vector2d newPosition = switch (direction) {
+            case FORWARD -> position.add(orientation.toUnitVector());
+            case BACKWARD -> position.add(orientation.toUnitVector().opposite());
+            case RIGHT, LEFT -> position;
+      };
+
+        if (newPosition.precedes(UPPER_EDGE) && newPosition.follows(LOWER_EDGE)) {
+            position = newPosition;
         }
     }
 }
