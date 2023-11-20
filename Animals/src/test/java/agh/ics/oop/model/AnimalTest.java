@@ -28,7 +28,7 @@ class AnimalTest {
     @Test
     void animalCanMove(){
         //given
-        MoveValidator map = new RectangularMap(4,4);
+        MoveValidator<Vector2d> map = new RectangularMap(4,4);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(new Vector2d(3,2));
         Animal animal3 = new Animal(new Vector2d(1,0));
