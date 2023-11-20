@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
+import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
 public class Simulation {
     private final List<Animal> animals = new ArrayList<>();
     private final List<MoveDirection> directions;
-    private final WorldMap map;
+    private final WorldMap<Animal, Vector2d> map;
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> directions, WorldMap map) {
+    public Simulation(List<Vector2d> positions, List<MoveDirection> directions, WorldMap<Animal, Vector2d> map) {
         this.directions = directions;
         this.map = map;
         createAnimals(positions);
