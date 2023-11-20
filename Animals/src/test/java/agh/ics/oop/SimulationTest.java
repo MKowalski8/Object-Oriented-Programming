@@ -115,4 +115,27 @@ class SimulationTest {
         assertTrue(animalsMap.containsKey(new Vector2d(2,1)));
     }
 
+
+    @Test
+    void checkIfAnimalsArePutCorrect(){
+        RectangularMap map = new RectangularMap(4,4);
+        String[] movesThatCanNotBeDone = new String[]{"l", "r", "f", "b"};
+//        Second animal shouldn't be placed
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(2,2), new Vector2d(2,1));
+
+        //when
+        List<MoveDirection> parsToManyArgs = OptionsParser.getDirection(movesThatCanNotBeDone);
+        Simulation simulation = new Simulation(positions, parsToManyArgs, map); simulation.run();
+        List<Animal> animals = simulation.getAnimals();
+        Map<Vector2d,Animal> animalsMap = map.getMap();
+
+        //then
+        assertEquals(MapDirection.WEST, animals.get(0).getOrientation());
+        assertEquals(new Vector2d(1,2), animals.get(0).getPosition());
+        assertTrue(animalsMap.containsKey(new Vector2d(1,2)));
+
+        assertEquals(MapDirection.EAST, animals.get(1).getOrientation());
+        assertEquals(new Vector2d(1,1), animals.get(1).getPosition());
+        assertTrue(animalsMap.containsKey(new Vector2d(1,1)));
+    }
 }

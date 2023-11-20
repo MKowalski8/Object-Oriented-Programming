@@ -21,8 +21,9 @@ public class Simulation {
     private void createAnimals(List<Vector2d> positions) {
         for (Vector2d position : positions) {
             Animal nextAnimal = new Animal(position);
-            animals.add(nextAnimal);
-            map.place(nextAnimal);
+            if (map.place(nextAnimal)) {
+                animals.add(nextAnimal);
+            }
         }
     }
 
