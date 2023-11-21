@@ -29,7 +29,7 @@ public class TextMap implements WorldMap<String, Integer> {
     @Override
     public void move(String word, MoveDirection direction) {
         Integer indexOfWordToMove = getIndexOfWord(word);
-        System.out.println("Index of Word " + indexOfWordToMove);
+//        System.out.println("Index of Word " + indexOfWordToMove);
 
         if (indexOfWordToMove != -1) {
             Word wordToMove = strings.get(indexOfWordToMove);

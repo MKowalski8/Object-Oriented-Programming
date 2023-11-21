@@ -53,7 +53,9 @@ class TextMapTest {
         map.place("sowoniedźwiedzia");
         map.place("kota");
 
-        //whe
+        //when
+//        This move shouldn't be made, so check if it would change correct answers
+        map.move("tegoNieMa", MoveDirection.BACKWARD);
 //        Try to get out from map
         map.move("ala", MoveDirection.BACKWARD);
 //        Exchange with next word
