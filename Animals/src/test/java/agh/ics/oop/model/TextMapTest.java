@@ -27,7 +27,7 @@ class TextMapTest {
         map.place("sowoniedźwiedzia");
 
         //when
-//        change orienation to NORTH
+//        change orientation to NORTH
         map.move("ala", MoveDirection.LEFT);
 //        nothing's happened
         map.move("ala", MoveDirection.BACKWARD);
@@ -53,14 +53,16 @@ class TextMapTest {
         map.place("sowoniedźwiedzia");
         map.place("kota");
 
-        //when
-//        change orienation to NORTH
+        //whe
+//        Try to get out from map
+        map.move("ala", MoveDirection.BACKWARD);
+//        Exchange with next word
         map.move("ala", MoveDirection.FORWARD);
-//        try to go out from table
+//        Exchange with next word
         map.move("sowoniedźwiedzia", MoveDirection.FORWARD);
-//        change orientation to west
+//        change orientation to WEST
         map.move("ma", MoveDirection.LEFT); map.move("ma", MoveDirection.LEFT);
-//        exchange "ma" with "sowoniedziwedz"
+//        exchange "ma" with "ala"
         map.move("ma", MoveDirection.BACKWARD);
 
         //then
