@@ -5,6 +5,11 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class TextMap implements WorldMap<String, Integer> {
+//   Posługuje się tutaj objektem klasy Word. Po to, aby pamiętać orientacje naszego słowa
+//   Wstępnie jest ona ustawiona na EAST, czyli gdy poruszamy się do przodu to zamieniamy się ze słowem na prawo
+//   od naszego, a gdy poruszamy się od tyłu, to zmieniamy sie ze słowem na lewo od naszego.
+//   Jednak rozumiem, że słowa też mogą mieć swoją orientację, więc posłużenie się nową klasą, było najprostsze.
+
     private final Map<Integer, Word> strings = new HashMap<>();
     private int upperBond = -1;
 
@@ -50,6 +55,9 @@ public class TextMap implements WorldMap<String, Integer> {
     }
 
 
+//    Funkcja potrzebna do uzyskania indeksu, na którym znajduje się nasze słowo, które chcemy przesunąć
+//    W zwykłej array liście też musielibyśmy szukać po całałości, więć użycie tutaj haszmapy i przeiterowanie
+//    po niej w celu znalezenia odpowiedniego klucza, nie jest takie złe.
     private Integer getIndexOfWord(String word) {
         for (Map.Entry<Integer, Word> ourWord : strings.entrySet()) {
             if (ourWord.getValue().getWord().equals(word)) {
