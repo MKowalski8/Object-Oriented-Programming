@@ -48,7 +48,7 @@ public class RectangularMap implements WorldMap {
             Vector2d oldPosition = animal.getPosition();
             animal.move(direction, this);
 
-            if (animal.getPosition() != oldPosition){
+            if (!animal.getPosition().equals(oldPosition)){
                 animals.remove(oldPosition, animal);
                 animals.put(animal.getPosition(), animal);
             }
@@ -62,11 +62,7 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public Animal objectAt(Vector2d position) {
-        if (isOccupied(position)) {
             return animals.get(position);
-        } else {
-            return null;
-        }
     }
 //    This getter is for tests
     public Map<Vector2d, Animal> getMap() {
