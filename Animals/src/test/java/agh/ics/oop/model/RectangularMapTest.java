@@ -74,7 +74,7 @@ class RectangularMapTest {
     }
 
     @Test
-    void move() {
+    void canMoveAnAnimalOnMap() {
         //given
         RectangularMap map = new RectangularMap(4, 4);
         Vector2d animal1StartVector = new Vector2d(2, 0);
