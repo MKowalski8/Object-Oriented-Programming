@@ -28,22 +28,23 @@ class AnimalTest {
     @Test
     void animalCanMove(){
         //given
+        MoveValidator map = new RectangularMap(4,4);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(new Vector2d(3,2));
         Animal animal3 = new Animal(new Vector2d(1,0));
         Animal animal4 = new Animal(new Vector2d(3,4));
         Animal animal5 = new Animal(new Vector2d(1,2));
         Animal animal6 = new Animal(new Vector2d(4,1));
-
-        //when
-        animal1.move(MoveDirection.RIGHT);
-        animal1.move(MoveDirection.BACKWARD);
-        animal2.move(MoveDirection.LEFT);
-        animal2.move(MoveDirection.FORWARD);
-        animal3.move(MoveDirection.BACKWARD);
-        animal4.move(MoveDirection.FORWARD);
-        animal5.move(MoveDirection.FORWARD);
-        animal6.move(MoveDirection.BACKWARD);
+//
+//        //when
+        animal1.move(MoveDirection.RIGHT, map);
+        animal1.move(MoveDirection.BACKWARD, map);
+        animal2.move(MoveDirection.LEFT, map);
+        animal2.move(MoveDirection.FORWARD, map);
+        animal3.move(MoveDirection.BACKWARD, map);
+        animal4.move(MoveDirection.FORWARD, map);
+        animal5.move(MoveDirection.FORWARD, map);
+        animal6.move(MoveDirection.BACKWARD, map);
 
 
         //then

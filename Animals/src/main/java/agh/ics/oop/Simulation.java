@@ -1,8 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,15 +10,20 @@ import java.util.List;
 public class Simulation {
     private final List<Animal> animals = new ArrayList<>();
     private final List<MoveDirection> directions;
+    private final WorldMap map;
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> directions) {
-        createAnimals(positions);
+    public Simulation(List<Vector2d> positions, List<MoveDirection> directions, WorldMap map) {
         this.directions = directions;
+        this.map = map;
+        createAnimals(positions);
     }
 
     private void createAnimals(List<Vector2d> positions) {
         for (Vector2d position : positions) {
-            animals.add(new Animal(position));
+            Animal nextAnimal = new Animal(position);
+            if (map.place(nextAnimal)) {
+                animals.add(nextAnimal);
+            }
         }
     }
 
@@ -28,9 +31,9 @@ public class Simulation {
         for (int j = 0; j < directions.size(); j++) {
             int i = j % animals.size();
             Animal animal = animals.get(i);
-            animal.move(directions.get(j));
+            map.move(animal, directions.get(j));
 
-            System.out.printf(String.format("Zwierze %d : %s\n", i + 1, animal.toString()));
+            System.out.printf(String.format("Zwierze %d : %s\n", i + 1, map.toString()));
         }
     }
 

@@ -2,7 +2,6 @@ package agh.ics.oop.model;
 
 public class Animal {
     public static final Vector2d UPPER_EDGE = new Vector2d(4, 4);
-    public static final Vector2d LOWER_EDGE = new Vector2d(0, 0);
     private MapDirection orientation;
     private Vector2d position;
 
@@ -16,7 +15,12 @@ public class Animal {
     }
 
     public String toString() {
-        return String.format("%s %s", position.toString(), orientation.toString());
+        return switch(orientation){
+            case NORTH -> "N";
+            case SOUTH -> "S";
+            case WEST -> "W";
+            case EAST -> "E";
+        };
     }
 
     public boolean isAt(Vector2d position) {
@@ -31,7 +35,7 @@ public class Animal {
         return position;
     }
     
-    public void move(MoveDirection direction) {
+    public void move(MoveDirection direction, MoveValidator validator) {
         orientation = switch(direction){
             case RIGHT -> orientation.next();
             case LEFT -> orientation.previous();
@@ -44,7 +48,7 @@ public class Animal {
             case RIGHT, LEFT -> position;
       };
 
-        if (newPosition.precedes(UPPER_EDGE) && newPosition.follows(LOWER_EDGE)) {
+        if (validator.canMoveTo(newPosition)) {
             position = newPosition;
         }
     }
