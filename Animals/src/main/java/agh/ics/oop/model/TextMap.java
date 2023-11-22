@@ -1,7 +1,8 @@
 package agh.ics.oop.model;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 
 public class TextMap implements WorldMap<String, Integer> {
@@ -10,7 +11,8 @@ public class TextMap implements WorldMap<String, Integer> {
 //   od naszego, a gdy poruszamy się od tyłu, to zmieniamy sie ze słowem na lewo od naszego.
 //   Jednak rozumiem, że słowa też mogą mieć swoją orientację, więc posłużenie się nową klasą, było najprostsze.
 
-    private final Map<Integer, Word> strings = new HashMap<>();
+//    private final Map<Integer, Word> strings = new HashMap<>();
+    private final List<Word> strings = new ArrayList<>();
     private int upperBond = -1;
 
     public TextMap() {
@@ -22,13 +24,14 @@ public class TextMap implements WorldMap<String, Integer> {
     @Override
     public boolean place(String word) {
         upperBond++;
-        strings.put(upperBond, new Word(word));
+//        strings.put(upperBond, new Word(word));
+        strings.add(new Word(word));
         return true;
     }
 
     @Override
     public void move(String word, MoveDirection direction) {
-        Integer indexOfWordToMove = getIndexOfWord(word);
+        int indexOfWordToMove = getIndexOfWord(word);
 //        System.out.println("Index of Word " + indexOfWordToMove);
 
         if (indexOfWordToMove != -1) {
@@ -36,7 +39,7 @@ public class TextMap implements WorldMap<String, Integer> {
             wordToMove.changeOrientation(direction);
 
 
-            Integer indexOfWordToExchange = switch (direction) {
+            int indexOfWordToExchange = switch (direction) {
                 case FORWARD -> indexOfWordToMove + wordToMove.getOrientation().toUnitVector().getX();
                 case BACKWARD -> indexOfWordToMove - wordToMove.getOrientation().toUnitVector().getX();
                 case RIGHT, LEFT -> -1;
@@ -46,10 +49,8 @@ public class TextMap implements WorldMap<String, Integer> {
 //                System.out.println(indexOfWordToExchange);
 //                System.out.println(wordToMove.getOrientation().toUnitVector().getX());
                 Word wordToExchange = strings.get(indexOfWordToExchange);
-                strings.remove(indexOfWordToExchange);
-                strings.remove(indexOfWordToMove);
-                strings.put(indexOfWordToExchange, wordToMove);
-                strings.put(indexOfWordToMove, wordToExchange);
+                strings.set(indexOfWordToMove, wordToExchange);
+                strings.set(indexOfWordToExchange, wordToMove);
             }
         }
     }
@@ -58,10 +59,10 @@ public class TextMap implements WorldMap<String, Integer> {
 //    Funkcja potrzebna do uzyskania indeksu, na którym znajduje się nasze słowo, które chcemy przesunąć
 //    W zwykłej array liście też musielibyśmy szukać po całałości, więć użycie tutaj haszmapy i przeiterowanie
 //    po niej w celu znalezenia odpowiedniego klucza, nie jest takie złe.
-    private Integer getIndexOfWord(String word) {
-        for (Map.Entry<Integer, Word> ourWord : strings.entrySet()) {
-            if (ourWord.getValue().getWord().equals(word)) {
-                return ourWord.getKey();
+    private int getIndexOfWord(String word) {
+        for (int i = 0; i < upperBond+1; i++ ) {
+            if (strings.get(i).getWord().equals(word)) {
+                return i;
             }
         }
         return -1;
