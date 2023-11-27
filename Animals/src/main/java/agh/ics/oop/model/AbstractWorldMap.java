@@ -4,8 +4,9 @@ import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
 
-public abstract class AbstractWorldMap implements WorldMap{
+public abstract class AbstractWorldMap implements WorldMap {
     private final Map<Vector2d, Animal> animals = new HashMap<>();
+
     public boolean place(Animal animal) {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
@@ -20,14 +21,14 @@ public abstract class AbstractWorldMap implements WorldMap{
             Vector2d oldPosition = animal.getPosition();
             animal.move(direction, this);
 
-            if (!animal.getPosition().equals(oldPosition)){
+            if (!animal.getPosition().equals(oldPosition)) {
                 animals.remove(oldPosition, animal);
                 animals.put(animal.getPosition(), animal);
             }
         }
     }
 
-    protected String draw(Vector2d lowerLeft, Vector2d upperRight){
+    protected String draw(Vector2d lowerLeft, Vector2d upperRight) {
         MapVisualizer map = new MapVisualizer(this);
         return map.draw(lowerLeft, upperRight);
     }
@@ -43,11 +44,11 @@ public abstract class AbstractWorldMap implements WorldMap{
     }
 
     @Override
-    public List<WorldElement> getElements(){
+    public List<WorldElement> getElements() {
         return new ArrayList<>(animals.values());
     }
 
-    public Map<Vector2d, Animal> getAnimals(){
+    public Map<Vector2d, Animal> getAnimals() {
         return Collections.unmodifiableMap(animals);
     }
 }

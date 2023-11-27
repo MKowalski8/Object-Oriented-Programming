@@ -1,11 +1,5 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.MapVisualizer;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class RectangularMap extends AbstractWorldMap {
     public static final Vector2d LOWER_EDGE = new Vector2d(0, 0);

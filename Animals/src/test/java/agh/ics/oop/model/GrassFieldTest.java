@@ -12,10 +12,10 @@ class GrassFieldTest {
     @Test
     void canVisualizeMap() {
         //given
-        GrassField map = new GrassField(1);
+        GrassField map = new GrassField(10);
         map.place(new Animal());
         map.place(new Animal(new Vector2d(4, 5)));
-        map.place(new Animal(new Vector2d(-5,-5)));
+        map.place(new Animal(new Vector2d(-5, -5)));
 
         //then
         System.out.println(map);
@@ -78,13 +78,13 @@ class GrassFieldTest {
 //        nothing changes, because another animal was there
         assertEquals(animal2, animals.get(animal2StartVector));
 //        this should work
-        assertEquals(animal3, animals.get(new Vector2d(2,2)));
+        assertEquals(animal3, animals.get(new Vector2d(2, 2)));
 //        check if previous position was deleted
         assertFalse(animals.containsKey(animal3StartVector));
 //        move of animal5 wasn't done, because it wasn't placed,
 //        so check if it isn't on the old place or on the place where it would go
         assertFalse(animals.containsKey(animal4StartVector));
-        assertFalse(animals.containsKey(new Vector2d(0,1)));
+        assertFalse(animals.containsKey(new Vector2d(0, 1)));
     }
 
     @Test
@@ -97,7 +97,7 @@ class GrassFieldTest {
         System.out.println(firstGrassPosition);
 
         Animal animal1 = new Animal(firstGrassPosition);
-        Animal animal2 = new Animal(firstGrassPosition.add(new Vector2d(0,1)));
+        Animal animal2 = new Animal(firstGrassPosition.add(new Vector2d(0, 1)));
         map.place(animal1);
         map.place(animal2);
 
@@ -110,7 +110,7 @@ class GrassFieldTest {
 
         //then
 //        Check if the first animal did his moves correct (he was placed on grass)
-        assertEquals(animal1, animals.get(firstGrassPosition.add(new Vector2d(-1,0))));
+        assertEquals(animal1, animals.get(firstGrassPosition.add(new Vector2d(-1, 0))));
 //        Check if the second animal move to grass position
         assertEquals(animal2, animals.get(firstGrassPosition));
 
@@ -135,7 +135,7 @@ class GrassFieldTest {
         assertEquals(animal2, map.objectAt(animal2Vector));
         assertEquals(grass.values().iterator().next(),
                 map.objectAt(grass.keySet().iterator().next()));
-        assertNull(map.objectAt(new Vector2d(-100,-100)));
+        assertNull(map.objectAt(new Vector2d(-100, -100)));
 
     }
 
