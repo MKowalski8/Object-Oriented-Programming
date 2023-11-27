@@ -20,7 +20,7 @@ class SimulationTest {
         List<MoveDirection> parsCorrectArgs = OptionsParser.getDirection(correctArgs);
         Simulation simulation = new Simulation(positions, parsCorrectArgs, map); simulation.run();
         List<Animal> animalsList = simulation.getAnimals();
-        Map<Vector2d,Animal> animalsMap = map.getMap();
+        Map<Vector2d,Animal> animalsMap = map.getAnimals();
 
         //then
         assertEquals(MapDirection.WEST, animalsList.get(0).getOrientation());
@@ -47,7 +47,7 @@ class SimulationTest {
         List<MoveDirection> parsWithIncorrectArgs = OptionsParser.getDirection(withIncorrectArgs);
         Simulation simulation = new Simulation(positions, parsWithIncorrectArgs, map); simulation.run();
         List<Animal> animals = simulation.getAnimals();
-        Map<Vector2d,Animal> animalsMap = map.getMap();
+        Map<Vector2d,Animal> animalsMap = map.getAnimals();
 
         //them
         assertEquals(MapDirection.NORTH, animals.get(0).getOrientation());
@@ -73,7 +73,7 @@ class SimulationTest {
         List<MoveDirection> parsToManyArgs = OptionsParser.getDirection(movesThatCanNotBeDone);
         Simulation simulation = new Simulation(positions, parsToManyArgs, map); simulation.run();
         List<Animal> animals = simulation.getAnimals();
-        Map<Vector2d,Animal> animalsMap = map.getMap();
+        Map<Vector2d,Animal> animalsMap = map.getAnimals();
 
         //then
         assertEquals(MapDirection.WEST, animals.get(0).getOrientation());
@@ -99,7 +99,7 @@ class SimulationTest {
         List<MoveDirection> parsToManyArgs = OptionsParser.getDirection(movesThatCanNotBeDone);
         Simulation simulation = new Simulation(positions, parsToManyArgs, map); simulation.run();
         List<Animal> animals = simulation.getAnimals();
-        Map<Vector2d,Animal> animalsMap = map.getMap();
+        Map<Vector2d,Animal> animalsMap = map.getAnimals();
 
         //then
         assertEquals(MapDirection.WEST, animals.get(0).getOrientation());
@@ -127,7 +127,7 @@ class SimulationTest {
         List<MoveDirection> parsToManyArgs = OptionsParser.getDirection(movesThatCanNotBeDone);
         Simulation simulation = new Simulation(positions, parsToManyArgs, map); simulation.run();
         List<Animal> animals = simulation.getAnimals();
-        Map<Vector2d,Animal> animalsMap = map.getMap();
+        Map<Vector2d,Animal> animalsMap = map.getAnimals();
 
         //then
         assertEquals(MapDirection.WEST, animals.get(0).getOrientation());

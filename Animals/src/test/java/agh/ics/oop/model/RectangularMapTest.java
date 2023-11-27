@@ -22,7 +22,6 @@ class RectangularMapTest {
         //then
         assertFalse(map.isOccupied(new Vector2d(1, 1)));
         assertTrue(map.isOccupied(animalVector));
-
     }
 
     @Test
@@ -96,7 +95,7 @@ class RectangularMapTest {
         map.place(animal4);
 //        I need this to check if previous positions
 //        after moves were deleted
-        Map<Vector2d, Animal> animals = map.getMap();
+        Map<Vector2d, Animal> animals = map.getAnimals();
 
         //when
         map.move(animal1, MoveDirection.BACKWARD);
@@ -126,7 +125,7 @@ class RectangularMapTest {
 
 
     @Test
-    void checkWhichObjectIsAt() {
+    void checkIfAnimalIsAt() {
         //given
         RectangularMap map = new RectangularMap(6, 5);
         Vector2d animal1Vector = new Vector2d(2, 3);
