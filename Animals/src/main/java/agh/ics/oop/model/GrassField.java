@@ -3,55 +3,45 @@ package agh.ics.oop.model;
 import java.util.*;
 
 public class GrassField extends AbstractWorldMap {
-
-    private final int grassNumber;
-    private Vector2d upperRight;
-    private Vector2d lowerLeft;
-
     private final Map<Vector2d, Grass> grass = new HashMap<>();
 
 
     public GrassField(int grassNumber) {
-        this.grassNumber = grassNumber;
-
-        int borderValue = (int) Math.ceil(Math.sqrt(grassNumber * 10));
-        this.upperRight = new Vector2d(borderValue, borderValue);
-        this.lowerLeft = new Vector2d(0, 0);
-        grassPlanting();
+        grassPlanting(grassNumber);
 //        System.out.println(grass);
     }
 
     public String toString() {
-        return super.draw(lowerLeft, upperRight);
+        Map<Vector2d, Animal> animals = this.getAnimals();
+        Vector2d maxVector = new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
+        Vector2d minVector = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
+
+        for(Vector2d vector : animals.keySet()){
+            minVector = minVector.lowerLeft(vector);
+            maxVector = maxVector.upperRight(vector);
+        }
+
+        for(Vector2d vector : grass.keySet()){
+            minVector = minVector.lowerLeft(vector);
+            maxVector = maxVector.upperRight(vector);
+        }
+
+        return super.draw(minVector, maxVector);
     }
 
-    private void grassPlanting() {
-        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(upperRight.getX(), upperRight.getY(), grassNumber);
+    private void grassPlanting(int grassNumber) {
+        int borderValue = (int) Math.ceil(Math.sqrt(grassNumber * 10));
+
+        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(borderValue, borderValue, grassNumber);
         for (Vector2d grassPosition : randomPositionGenerator) {
             grass.put(grassPosition, new Grass(grassPosition));
         }
     }
 
     @Override
-    public boolean place(Animal animal) {
-//        Nie wiem czy o to chodzi z dynamicznym wyznaczaniem skrajnych punktów, ale
-//        uznałem to za rozwiązanie, które generuje jak najmniej powtarzających się operacji.
-        if (super.place(animal)) {
-            extendMapBorders(animal.getPosition());
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void move(Animal animal, MoveDirection direction) {
-        super.move(animal, direction);
-        extendMapBorders(animal.getPosition());
-    }
-
-    @Override
     public WorldElement objectAt(Vector2d position) {
-        return super.objectAt(position) != null ? super.objectAt(position) : grass.get(position);
+        WorldElement worldElement = super.objectAt(position);
+        return worldElement != null ? worldElement : grass.get(position);
     }
 
     @Override
@@ -59,11 +49,6 @@ public class GrassField extends AbstractWorldMap {
         List<WorldElement> elements = super.getElements();
         elements.addAll(grass.values());
         return elements;
-    }
-
-    private void extendMapBorders(Vector2d extender) {
-        upperRight = upperRight.upperRight(extender);
-        lowerLeft = lowerLeft.lowerLeft(extender);
     }
 
     public Map<Vector2d, Grass> getGrass() {
