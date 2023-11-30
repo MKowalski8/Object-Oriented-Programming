@@ -11,24 +11,6 @@ public class GrassField extends AbstractWorldMap {
 //        System.out.println(grass);
     }
 
-    public String toString() {
-        Map<Vector2d, Animal> animals = this.getAnimals();
-        Vector2d maxVector = new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
-        Vector2d minVector = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
-
-        for(Vector2d vector : animals.keySet()){
-            minVector = minVector.lowerLeft(vector);
-            maxVector = maxVector.upperRight(vector);
-        }
-
-        for(Vector2d vector : grass.keySet()){
-            minVector = minVector.lowerLeft(vector);
-            maxVector = maxVector.upperRight(vector);
-        }
-
-        return super.draw(minVector, maxVector);
-    }
-
     private void grassPlanting(int grassNumber) {
         int borderValue = (int) Math.ceil(Math.sqrt(grassNumber * 10));
 
@@ -49,6 +31,20 @@ public class GrassField extends AbstractWorldMap {
         List<WorldElement> elements = super.getElements();
         elements.addAll(grass.values());
         return elements;
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        List<WorldElement> worldElements = getElements();
+        Vector2d maxVector = new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
+        Vector2d minVector = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
+
+        for(WorldElement worldElement : worldElements){
+            minVector = minVector.lowerLeft(worldElement.getPosition());
+            maxVector = maxVector.upperRight(worldElement.getPosition());
+        }
+
+        return new Boundary(minVector, maxVector);
     }
 
     public Map<Vector2d, Grass> getGrass() {

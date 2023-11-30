@@ -28,9 +28,10 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
     }
 
-    protected String draw(Vector2d lowerLeft, Vector2d upperRight) {
+    public String toString() {
         MapVisualizer map = new MapVisualizer(this);
-        return map.draw(lowerLeft, upperRight);
+        Boundary bounds = getCurrentBounds();
+        return map.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 
     @Override
