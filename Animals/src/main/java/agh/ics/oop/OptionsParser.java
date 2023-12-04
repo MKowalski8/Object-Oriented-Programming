@@ -16,12 +16,10 @@ public class OptionsParser {
                 case "b" -> MoveDirection.BACKWARD;
                 case "r" -> MoveDirection.RIGHT;
                 case "l" -> MoveDirection.LEFT;
-                default -> null;
+                default -> throw new IllegalArgumentException(arg + " argument is invalid");
             };
 
-            if (value != null) {
-                directions.add(value);
-            }
+            directions.add(value);
         }
 //        return Directions
         return directions;

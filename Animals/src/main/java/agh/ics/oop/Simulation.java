@@ -21,8 +21,11 @@ public class Simulation {
     private void createAnimals(List<Vector2d> positions) {
         for (Vector2d position : positions) {
             Animal nextAnimal = new Animal(position);
-            if (map.place(nextAnimal)) {
+            try{
+                map.place(nextAnimal);
                 animals.add(nextAnimal);
+            } catch (PositionAlreadyOccupiedException e) {
+                System.out.println(e);
             }
         }
     }
@@ -32,8 +35,6 @@ public class Simulation {
             int i = j % animals.size();
             Animal animal = animals.get(i);
             map.move(animal, directions.get(j));
-
-            System.out.printf(String.format("Zwierze %d : %s\n", i + 1, map.toString()));
         }
     }
 
