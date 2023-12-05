@@ -9,17 +9,19 @@ import java.util.Arrays;
 
 public class World {
     public static void main(String[] args) {
-        try{
-            List<MoveDirection> directions = OptionsParser.getDirection(args);
-            List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-            RectangularMap map = new RectangularMap(5, 5);
-            MapChangeListener observer = new ConsoleMapDisplay();
-            map.addObserver(observer);
-            Simulation simulation = new Simulation(positions, directions, map);
-            simulation.run();
-        } catch (IllegalArgumentException e){
+        List<MoveDirection> directions;
+        try {
+            directions = OptionsParser.getDirection(args);
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+            return;
         }
+        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
+        RectangularMap map = new RectangularMap(5, 5);
+        MapChangeListener observer = new ConsoleMapDisplay();
+        map.addObserver(observer);
+        Simulation simulation = new Simulation(positions, directions, map);
+        simulation.run();
     }
 }
 
