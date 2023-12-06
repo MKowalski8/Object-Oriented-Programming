@@ -13,9 +13,12 @@ class GrassFieldTest {
     void canVisualizeMap() {
         //given
         GrassField map = new GrassField(10);
-        map.place(new Animal());
-        map.place(new Animal(new Vector2d(4, 5)));
-        map.place(new Animal(new Vector2d(-5, -5)));
+       try{
+           map.place(new Animal());
+           map.place(new Animal(new Vector2d(4, 5)));
+           map.place(new Animal(new Vector2d(-5, -5)));
+       } catch (PositionAlreadyOccupiedException e){}
+
 
         //then
         System.out.println(map);
@@ -36,12 +39,14 @@ class GrassFieldTest {
 
 
         //then
-        assertTrue(map.place(animal1));
-        assertTrue(map.place(animal2));
-//        Check if you can place an animal on grass
-        assertTrue(map.place(new Animal(grassPosition)));
+        assertDoesNotThrow(() -> map.place(animal1));
+        assertDoesNotThrow(() -> map.place(animal2));
+
+        // Check if you can place an animal on grass
+        assertDoesNotThrow(() -> map.place(new Animal(grassPosition)));
+
 //        previous animal is here
-        assertFalse(map.place(animal3));
+        assertThrows(PositionAlreadyOccupiedException.class, () -> map.place(animal3));
     }
 
     @Test
@@ -59,9 +64,12 @@ class GrassFieldTest {
         Animal animal3 = new Animal(animal3StartVector);
         Animal animal4 = new Animal(animal4StartVector);
 
-        map.place(animal1);
-        map.place(animal2);
-        map.place(animal3);
+        try{
+            map.place(animal1);
+            map.place(animal2);
+            map.place(animal3);
+        } catch(PositionAlreadyOccupiedException e){}
+
 //        I need this to check if previous positions
 //        after moves were deleted
         Map<Vector2d, Animal> animals = map.getAnimals();
@@ -98,8 +106,10 @@ class GrassFieldTest {
 
         Animal animal1 = new Animal(firstGrassPosition);
         Animal animal2 = new Animal(firstGrassPosition.add(new Vector2d(0, 1)));
-        map.place(animal1);
-        map.place(animal2);
+        try{
+            map.place(animal1);
+            map.place(animal2);
+        } catch(PositionAlreadyOccupiedException e){}
 
         //when
         map.move(animal1, MoveDirection.LEFT);
@@ -126,8 +136,10 @@ class GrassFieldTest {
         Animal animal2 = new Animal(animal2Vector);
 
         //when
-        map.place(animal1);
-        map.place(animal2);
+        try{
+            map.place(animal1);
+            map.place(animal2);
+        } catch(PositionAlreadyOccupiedException e){}
 
         Map<Vector2d, Grass> grass = map.getGrass();
         //then
@@ -146,7 +158,9 @@ class GrassFieldTest {
         Vector2d animalVector = new Vector2d(50, 50);
 
         //when
-        map.place(new Animal(animalVector));
+        try{
+            map.place(new Animal(animalVector));
+        } catch(PositionAlreadyOccupiedException e){}
 
         Map<Vector2d, Grass> grass = map.getGrass();
 

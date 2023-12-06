@@ -1,6 +1,8 @@
 package agh.ics.oop.model;
 
 
+import agh.ics.oop.model.util.MapVisualizer;
+
 public class RectangularMap extends AbstractWorldMap {
     public static final Vector2d LOWER_EDGE = new Vector2d(0, 0);
 
@@ -12,11 +14,6 @@ public class RectangularMap extends AbstractWorldMap {
         this.height = height;
     }
 
-
-    public String toString() {
-        return super.draw(LOWER_EDGE, new Vector2d(width, height));
-    }
-
     @Override
     public boolean canMoveTo(Vector2d position) {
         if (position.precedes(new Vector2d(width, height)) && position.follows(LOWER_EDGE)) {
@@ -25,4 +22,8 @@ public class RectangularMap extends AbstractWorldMap {
         return false;
     }
 
+    @Override
+    public Boundary getCurrentBounds() {
+        return new Boundary(LOWER_EDGE, new Vector2d(width,height));
+    }
 }

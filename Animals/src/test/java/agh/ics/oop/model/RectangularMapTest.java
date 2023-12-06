@@ -17,7 +17,10 @@ class RectangularMapTest {
         Vector2d animalVector = new Vector2d(2, 3);
 
         //when
-        map.place(new Animal(animalVector));
+        try{
+            map.place(new Animal(animalVector));
+        }catch(PositionAlreadyOccupiedException e){}
+
 
         //then
         assertFalse(map.isOccupied(new Vector2d(1, 1)));
@@ -30,7 +33,12 @@ class RectangularMapTest {
         RectangularMap map = new RectangularMap(5, 5);
         Vector2d animalVector = new Vector2d(2, 3);
         //when
-        map.place(new Animal(animalVector));
+
+        try{
+            map.place(new Animal(animalVector));
+        }catch(PositionAlreadyOccupiedException e){}
+
+
 
         //then
 //        out of map
@@ -48,8 +56,12 @@ class RectangularMapTest {
     void canVisualizeMap() {
         //given
         RectangularMap map = new RectangularMap(5, 5);
-        map.place(new Animal());
-        map.place(new Animal(new Vector2d(4, 5)));
+
+        try{
+            map.place(new Animal());
+            map.place(new Animal(new Vector2d(4, 5)));
+        }catch(PositionAlreadyOccupiedException e){}
+
 
         //then
         System.out.println(map);
@@ -64,12 +76,13 @@ class RectangularMapTest {
 
         //then
 //        out of map
-        assertFalse(map.place(new Animal(new Vector2d(5, -2))));
-        assertFalse(map.place(new Animal(new Vector2d(-1, 0))));
-//        it is okay
-        assertTrue(map.place(new Animal(animalVector)));
-//        previous animal is here
-        assertFalse(map.place(new Animal(animalVector)));
+        assertThrows(PositionAlreadyOccupiedException.class, () -> map.place(new Animal(new Vector2d(5, -2))));
+        assertThrows(PositionAlreadyOccupiedException.class, () -> map.place(new Animal(new Vector2d(-1, 0))));
+        //        it is okay
+        assertDoesNotThrow(() -> map.place(new Animal(animalVector)));
+        //        previous animal is here
+        assertThrows(PositionAlreadyOccupiedException.class, () -> map.place(new Animal(animalVector)));
+
     }
 
     @Test
@@ -89,10 +102,16 @@ class RectangularMapTest {
         Animal animal4 = new Animal(animal4StartVector);
         Animal animal5 = new Animal(animal5StartVector);
 
-        map.place(animal1);
-        map.place(animal2);
-        map.place(animal3);
-        map.place(animal4);
+
+        try{
+            map.place(animal1);
+            map.place(animal2);
+            map.place(animal3);
+            map.place(animal4);
+        }catch(PositionAlreadyOccupiedException e){
+            System.out.println("problem");
+        }
+
 //        I need this to check if previous positions
 //        after moves were deleted
         Map<Vector2d, Animal> animals = map.getAnimals();
@@ -134,8 +153,11 @@ class RectangularMapTest {
         Animal animal2 = new Animal(animal2Vector);
 
         //when
-        map.place(animal1);
-        map.place(animal2);
+        try{
+            map.place(animal1);
+            map.place(animal2);
+        }catch(PositionAlreadyOccupiedException e){}
+
 
         //then
         assertEquals(animal1, map.objectAt(animal1Vector));

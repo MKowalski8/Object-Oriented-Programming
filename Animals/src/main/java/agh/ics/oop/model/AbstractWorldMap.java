@@ -6,13 +6,15 @@ import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
     private final Map<Vector2d, Animal> animals = new HashMap<>();
+    private final List<MapChangeListener> observers = new ArrayList<>();
 
-    public boolean place(Animal animal) {
+    public void place(Animal animal) throws PositionAlreadyOccupiedException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
-            return true;
+            mapChange("Animal was placed");
+        } else {
+            throw new PositionAlreadyOccupiedException(animal.getPosition());
         }
-        return false;
     }
 
     @Override
@@ -24,13 +26,15 @@ public abstract class AbstractWorldMap implements WorldMap {
             if (!animal.getPosition().equals(oldPosition)) {
                 animals.remove(oldPosition, animal);
                 animals.put(animal.getPosition(), animal);
+                mapChange("Animal has moved from " + oldPosition + " to " + animal.getPosition());
             }
         }
     }
 
-    protected String draw(Vector2d lowerLeft, Vector2d upperRight) {
+    public String toString() {
         MapVisualizer map = new MapVisualizer(this);
-        return map.draw(lowerLeft, upperRight);
+        Boundary bounds = getCurrentBounds();
+        return map.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 
     @Override
@@ -50,5 +54,17 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public Map<Vector2d, Animal> getAnimals() {
         return Collections.unmodifiableMap(animals);
+    }
+
+    public void addObserver(MapChangeListener listener) {
+        observers.add(listener);
+    }
+
+    public void removeObserver(MapChangeListener listener) {
+        observers.remove(listener);
+    }
+
+    private void mapChange(String message) {
+        observers.forEach(observer -> observer.mapChanged(this, message));
     }
 }
