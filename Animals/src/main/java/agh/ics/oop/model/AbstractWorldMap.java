@@ -64,9 +64,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         observers.remove(listener);
     }
 
-    public void mapChange(String message) {
-        for (MapChangeListener observer : observers) {
-            observer.mapChanged(this, message);
-        }
+    private void mapChange(String message) {
+        observers.forEach(observer -> observer.mapChanged(this, message));
     }
 }
