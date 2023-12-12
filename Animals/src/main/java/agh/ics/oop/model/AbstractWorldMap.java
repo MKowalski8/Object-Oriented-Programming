@@ -8,6 +8,8 @@ public abstract class AbstractWorldMap implements WorldMap {
     private final Map<Vector2d, Animal> animals = new HashMap<>();
     private final List<MapChangeListener> observers = new ArrayList<>();
 
+    private final UUID id = UUID.randomUUID();
+
     public void place(Animal animal) throws PositionAlreadyOccupiedException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
@@ -66,5 +68,10 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     private void mapChange(String message) {
         observers.forEach(observer -> observer.mapChanged(this, message));
+    }
+
+    @Override
+    public UUID getID() {
+        return id;
     }
 }

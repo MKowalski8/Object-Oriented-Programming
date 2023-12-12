@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class Simulation {
+public class Simulation implements Runnable{
     private final List<Animal> animals = new ArrayList<>();
     private final List<MoveDirection> directions;
     private final WorldMap map;
