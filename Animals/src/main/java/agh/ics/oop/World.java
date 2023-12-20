@@ -12,7 +12,7 @@ public class World {
             List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
             List<Simulation> simulations = new ArrayList<>();
             MapChangeListener observer = new ConsoleMapDisplay();
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 1000; i++) {
                 simulations.addAll(getSimulations(positions, directions, observer));
             }
             SimulationEngine simulationEngine = new SimulationEngine(simulations);
@@ -33,8 +33,7 @@ public class World {
         map2.addObserver(observer);
         Simulation simulation1 = new Simulation(positions, directions, map1);
         Simulation simulation2 = new Simulation(positions, directions, map2);
-        List<Simulation> simulations = List.of(simulation1, simulation2);
-        return simulations;
+        return List.of(simulation1, simulation2);
     }
 }
 

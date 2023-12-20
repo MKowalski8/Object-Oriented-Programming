@@ -12,7 +12,7 @@ public class SimulationEngine {
 
     private final List<Simulation> simulations;
     private final List<Thread> threads = new ArrayList<>();
-    ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
 
     public SimulationEngine(List<Simulation> simulations) {
@@ -44,8 +44,6 @@ public class SimulationEngine {
     }
 
     public void runAsyncInThreadPool() throws InterruptedException {
-        simulations.forEach(simulation -> {
-            executorService.submit(simulation);
-        });
+        simulations.forEach(executorService::submit);
     }
 }
