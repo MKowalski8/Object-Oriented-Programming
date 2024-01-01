@@ -35,6 +35,11 @@ public class Simulation implements Runnable{
             int i = j % animals.size();
             Animal animal = animals.get(i);
             map.move(animal, directions.get(j));
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
