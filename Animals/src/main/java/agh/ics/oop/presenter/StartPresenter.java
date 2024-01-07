@@ -34,7 +34,6 @@ public class StartPresenter {
             SimulationPresenter presenter = loader.getController();
 
             GrassField grassField = new GrassField(10);
-            grassField.addObserver(presenter);
             presenter.setWorldMap(grassField);
             simulationStart(textField.getText().split(" "), grassField);
             Stage stage = new Stage();

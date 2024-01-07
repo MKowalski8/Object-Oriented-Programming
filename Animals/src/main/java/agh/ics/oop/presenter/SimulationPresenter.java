@@ -14,7 +14,7 @@ public class SimulationPresenter implements MapChangeListener {
     private static final double CELL_WIDTH = 35;
     private static final double CELL_HEIGHT = 35;
 
-    WorldMap map;
+    private WorldMap map;
 
     @FXML
     GridPane mapGrid = new GridPane();
@@ -24,6 +24,7 @@ public class SimulationPresenter implements MapChangeListener {
 
     public void setWorldMap(WorldMap map) {
         this.map = map;
+        map.addObserver(this);
     }
 
     public void drawMap(WorldMap worldMap) {
@@ -46,17 +47,7 @@ public class SimulationPresenter implements MapChangeListener {
         mapGrid.add(label, 0, 0);
         GridPane.setHalignment(label, HPos.CENTER);
 
-        for (int i = bounds.lowerLeft().getX(); i <= bounds.upperRight().getX(); i++) {
-            label = new Label(String.format("%d", i));
-            mapGrid.add(label, i + toAddX, 0);
-            GridPane.setHalignment(label, HPos.CENTER);
-        }
-
-        for (int i = bounds.lowerLeft().getY(); i <= bounds.upperRight().getY(); i++) {
-            label = new Label(String.format("%d", i));
-            mapGrid.add(label, 0, i + toAddY);
-            GridPane.setHalignment(label, HPos.CENTER);
-        }
+        drawBounds(bounds, toAddX, toAddY);
 
         for (int i = bounds.lowerLeft().getX(); i <= bounds.upperRight().getX(); i++) {
             for (int j = bounds.lowerLeft().getY(); j <= bounds.upperRight().getY(); j++) {
@@ -71,6 +62,21 @@ public class SimulationPresenter implements MapChangeListener {
                 mapGrid.add(label, i + toAddX, j + toAddY);
                 GridPane.setHalignment(label, HPos.CENTER);
             }
+        }
+    }
+
+    private void drawBounds(Boundary bounds, int toAddX, int toAddY) {
+        Label label;
+        for (int i = bounds.lowerLeft().getX(); i <= bounds.upperRight().getX(); i++) {
+            label = new Label(String.format("%d", i));
+            mapGrid.add(label, i + toAddX, 0);
+            GridPane.setHalignment(label, HPos.CENTER);
+        }
+
+        for (int i = bounds.lowerLeft().getY(); i <= bounds.upperRight().getY(); i++) {
+            label = new Label(String.format("%d", i));
+            mapGrid.add(label, 0, i + toAddY);
+            GridPane.setHalignment(label, HPos.CENTER);
         }
     }
 
