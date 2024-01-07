@@ -12,7 +12,7 @@ public class World {
             List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
             List<Simulation> simulations = new ArrayList<>();
             MapChangeListener observer = new ConsoleMapDisplay();
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 100; i++) {
                 simulations.addAll(getSimulations(positions, directions, observer));
             }
             SimulationEngine simulationEngine = new SimulationEngine(simulations);
@@ -24,6 +24,7 @@ public class World {
         } catch (IllegalArgumentException | InterruptedException e) {
             System.err.println(e.getMessage());
         }
+
     }
 
     private static List<Simulation> getSimulations(List<Vector2d> positions, List<MoveDirection> directions, MapChangeListener observer) {

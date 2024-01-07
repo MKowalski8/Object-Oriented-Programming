@@ -32,9 +32,15 @@ public class Simulation implements Runnable{
 
     public void run() {
         for (int j = 0; j < directions.size(); j++) {
+//            System.out.println(Thread.currentThread().getName());
             int i = j % animals.size();
             Animal animal = animals.get(i);
             map.move(animal, directions.get(j));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
