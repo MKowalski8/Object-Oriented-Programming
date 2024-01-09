@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import java.util.Date;
+import java.util.Optional;
 
 public class SimulationPresenter implements MapChangeListener {
 
@@ -21,10 +23,21 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     private Label moveLabel;
+    @FXML
+    private Label moveAndTimeLabel;
 
     public void setWorldMap(WorldMap map) {
         this.map = map;
         map.addObserver(this);
+
+        addDateObserver(map);
+    }
+
+    private void addDateObserver(WorldMap map) {
+        MapChangeListener listener = (givenMap, message) -> {
+            System.out.println(new Date() + " " + message);
+        };
+        map.addObserver(listener);
     }
 
     public void drawMap(WorldMap worldMap) {
@@ -54,9 +67,9 @@ public class SimulationPresenter implements MapChangeListener {
                 label = new Label(" ");
 
                 if (map.isOccupied(new Vector2d(i, j))) {
-                    WorldElement element = map.objectAt(new Vector2d(i, j));
-                    if (element != null) {
-                        label.setText(element.toString());
+                    Optional<WorldElement> element = map.objectAt(new Vector2d(i, j));
+                    if (element.isPresent()) {
+                        label.setText(element.get().toString());
                     }
                 }
                 mapGrid.add(label, i + toAddX, j + toAddY);

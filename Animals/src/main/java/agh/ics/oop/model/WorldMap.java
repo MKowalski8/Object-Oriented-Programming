@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -33,7 +34,7 @@ public interface WorldMap extends MoveValidator {
      * @return True if the position is occupied.
      */
     default boolean isOccupied(Vector2d position){
-        return objectAt(position) != null;
+        return objectAt(position).isPresent();
     }
 
     /**
@@ -42,7 +43,7 @@ public interface WorldMap extends MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    WorldElement objectAt(Vector2d position);
+    Optional<WorldElement> objectAt(Vector2d position);
 
     List<WorldElement> getElements();
 
@@ -53,4 +54,6 @@ public interface WorldMap extends MoveValidator {
     void addObserver(MapChangeListener listener);
 
     void removeObserver(MapChangeListener listener);
+
+    List<Animal> getOrderedAnimal();
 }

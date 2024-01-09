@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -143,11 +144,11 @@ class GrassFieldTest {
 
         Map<Vector2d, Grass> grass = map.getGrass();
         //then
-        assertEquals(animal1, map.objectAt(animal1Vector));
-        assertEquals(animal2, map.objectAt(animal2Vector));
+        assertEquals(animal1, map.objectAt(animal1Vector).get());
+        assertEquals(animal2, map.objectAt(animal2Vector).get());
         assertEquals(grass.values().iterator().next(),
-                map.objectAt(grass.keySet().iterator().next()));
-        assertNull(map.objectAt(new Vector2d(-100, -100)));
+                map.objectAt(grass.keySet().iterator().next()).get());
+        assertEquals(Optional.empty(), map.objectAt(new Vector2d(-100, -100)));
 
     }
 

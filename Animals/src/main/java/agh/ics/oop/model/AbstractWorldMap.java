@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public abstract class AbstractWorldMap implements WorldMap {
     private final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -21,16 +22,19 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        if (isOccupied(animal.getPosition()) && objectAt(animal.getPosition()).equals(animal)) {
-            Vector2d oldPosition = animal.getPosition();
-            animal.move(direction, this);
+        if (objectAt(animal.getPosition()).isPresent()) {
+            if (objectAt(animal.getPosition()).get().equals(animal)) {
+                Vector2d oldPosition = animal.getPosition();
+                animal.move(direction, this);
 
-            if (!animal.getPosition().equals(oldPosition)) {
-                animals.remove(oldPosition, animal);
-                animals.put(animal.getPosition(), animal);
-                mapChange("Animal has moved from " + oldPosition + " to " + animal.getPosition());
+                if (!animal.getPosition().equals(oldPosition)) {
+                    animals.remove(oldPosition, animal);
+                    animals.put(animal.getPosition(), animal);
+                    mapChange("Animal has moved from " + oldPosition + " to " + animal.getPosition());
+                }
             }
         }
+
     }
 
     public String toString() {
@@ -40,8 +44,8 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(animals.get(position));
     }
 
     @Override
@@ -73,5 +77,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public UUID getID() {
         return id;
+    }
+
+    @Override
+    public List<Animal> getOrderedAnimal() {
+        return animals.values().stream()
+                        .sorted(Comparator.comparing(Animal::getPosition, Comparator.comparingInt(Vector2d::getX)
+                                        .thenComparingInt(Vector2d::getY)))
+                        .toList();
     }
 }
