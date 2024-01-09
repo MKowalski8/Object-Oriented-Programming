@@ -8,7 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public class SimulationPresenter implements MapChangeListener {
@@ -23,14 +25,17 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     private Label moveLabel;
-    @FXML
-    private Label moveAndTimeLabel;
+
+    private List<WorldElementBox> elementsBoxes;
 
     public void setWorldMap(WorldMap map) {
         this.map = map;
         map.addObserver(this);
 
         addDateObserver(map);
+        map.addObserver(new FileMapDisplay());
+
+        addElementsBox();
     }
 
     private void addDateObserver(WorldMap map) {
@@ -38,6 +43,12 @@ public class SimulationPresenter implements MapChangeListener {
             System.out.println(new Date() + " " + message);
         };
         map.addObserver(listener);
+    }
+
+    private void addElementsBox(){
+        elementsBoxes = map.getElements().stream()
+                .map(WorldElementBox::new)
+                .toList();
     }
 
     public void drawMap(WorldMap worldMap) {
@@ -62,20 +73,15 @@ public class SimulationPresenter implements MapChangeListener {
 
         drawBounds(bounds, toAddX, toAddY);
 
-        for (int i = bounds.lowerLeft().getX(); i <= bounds.upperRight().getX(); i++) {
-            for (int j = bounds.lowerLeft().getY(); j <= bounds.upperRight().getY(); j++) {
-                label = new Label(" ");
+        drawMapElements(toAddX, toAddY);
+    }
 
-                if (map.isOccupied(new Vector2d(i, j))) {
-                    Optional<WorldElement> element = map.objectAt(new Vector2d(i, j));
-                    if (element.isPresent()) {
-                        label.setText(element.get().toString());
-                    }
-                }
-                mapGrid.add(label, i + toAddX, j + toAddY);
-                GridPane.setHalignment(label, HPos.CENTER);
-            }
-        }
+    private void drawMapElements(int toAddX, int toAddY) {
+       elementsBoxes.forEach((elementBox) -> {
+           mapGrid.add(elementBox.getVBox(),
+                   elementBox.getElementPosition().getX() + toAddX,
+                   elementBox.getElementPosition().getY() + toAddY);
+       });
     }
 
     private void drawBounds(Boundary bounds, int toAddX, int toAddY) {

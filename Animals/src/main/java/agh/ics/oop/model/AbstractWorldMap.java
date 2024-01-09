@@ -31,10 +31,11 @@ public abstract class AbstractWorldMap implements WorldMap {
                     animals.remove(oldPosition, animal);
                     animals.put(animal.getPosition(), animal);
                     mapChange("Animal has moved from " + oldPosition + " to " + animal.getPosition());
+                } else {
+                    mapChange("Animal has turned");
                 }
             }
         }
-
     }
 
     public String toString() {
@@ -82,8 +83,8 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public List<Animal> getOrderedAnimal() {
         return animals.values().stream()
-                        .sorted(Comparator.comparing(Animal::getPosition, Comparator.comparingInt(Vector2d::getX)
-                                        .thenComparingInt(Vector2d::getY)))
-                        .toList();
+                .sorted(Comparator.comparing(Animal::getPosition, Comparator.comparingInt(Vector2d::getX)
+                        .thenComparingInt(Vector2d::getY)))
+                .toList();
     }
 }

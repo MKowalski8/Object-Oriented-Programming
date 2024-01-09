@@ -20,9 +20,6 @@ public class StartPresenter {
     @FXML
     private TextField textField;
 
-    @FXML
-    private Label infoLabel;
-
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @FXML
@@ -34,8 +31,8 @@ public class StartPresenter {
             SimulationPresenter presenter = loader.getController();
 
             GrassField grassField = new GrassField(10);
-            presenter.setWorldMap(grassField);
             simulationStart(textField.getText().split(" "), grassField);
+            presenter.setWorldMap(grassField);
             Stage stage = new Stage();
             configureStage(stage, viewRoot);
             stage.show();

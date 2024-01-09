@@ -5,7 +5,7 @@ public class Grass implements WorldElement {
     private final static String GRASS_SYMBOL = "*";
     private final Vector2d position;
 
-    public Grass(Vector2d position){
+    public Grass(Vector2d position) {
         this.position = position;
     }
 
@@ -15,7 +15,19 @@ public class Grass implements WorldElement {
     }
 
     @Override
+    public String getImageURL() {
+        return "/grass.png";
+    }
+
+    @Override
+    public String getInfo() {
+        return "Grass";
+    }
+
+    @Override
     public String toString() {
         return GRASS_SYMBOL;
     }
 }
+
+
