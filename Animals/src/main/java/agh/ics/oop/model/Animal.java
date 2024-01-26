@@ -4,7 +4,6 @@ public class Animal implements WorldElement {
     public static final Vector2d UPPER_EDGE = new Vector2d(4, 4);
     private MapDirection orientation;
     private Vector2d position;
-
     public Animal() {
         this(new Vector2d(2,2));
     }
@@ -35,7 +34,27 @@ public class Animal implements WorldElement {
     public Vector2d getPosition() {
         return position;
     }
-    
+
+    @Override
+    public String getImageURL() {
+        return switch(orientation){
+            case NORTH -> "/down.png";
+            case SOUTH -> "/up.png";
+            case WEST -> "/left.png";
+            case EAST -> "/right.png";
+        };
+    }
+
+    @Override
+    public String getInfo() {
+        return getPosition().toString();
+    }
+
+//    @Override
+//    public WorldElementBox getElementBox() {
+//        return elementBox;
+//    }
+
     void move(MoveDirection direction, MoveValidator validator) {
         orientation = switch(direction){
             case RIGHT -> orientation.next();

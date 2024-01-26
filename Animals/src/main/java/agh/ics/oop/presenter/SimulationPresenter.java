@@ -9,6 +9,10 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 public class SimulationPresenter implements MapChangeListener {
 
     private static final double CELL_WIDTH = 35;
@@ -22,9 +26,29 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private Label moveLabel;
 
+    private List<WorldElementBox> elementsBoxes;
+
     public void setWorldMap(WorldMap map) {
         this.map = map;
         map.addObserver(this);
+
+        addDateObserver(map);
+        map.addObserver(new FileMapDisplay());
+
+        addElementsBox();
+    }
+
+    private void addDateObserver(WorldMap map) {
+        MapChangeListener listener = (givenMap, message) -> {
+            System.out.println(new Date() + " " + message);
+        };
+        map.addObserver(listener);
+    }
+
+    private void addElementsBox(){
+        elementsBoxes = map.getElements().stream()
+                .map(WorldElementBox::new)
+                .toList();
     }
 
     public void drawMap(WorldMap worldMap) {
@@ -49,20 +73,17 @@ public class SimulationPresenter implements MapChangeListener {
 
         drawBounds(bounds, toAddX, toAddY);
 
-        for (int i = bounds.lowerLeft().getX(); i <= bounds.upperRight().getX(); i++) {
-            for (int j = bounds.lowerLeft().getY(); j <= bounds.upperRight().getY(); j++) {
-                label = new Label(" ");
+        drawMapElements(toAddX, toAddY);
+    }
 
-                if (map.isOccupied(new Vector2d(i, j))) {
-                    WorldElement element = map.objectAt(new Vector2d(i, j));
-                    if (element != null) {
-                        label.setText(element.toString());
-                    }
-                }
-                mapGrid.add(label, i + toAddX, j + toAddY);
-                GridPane.setHalignment(label, HPos.CENTER);
-            }
-        }
+    private void drawMapElements(int toAddX, int toAddY) {
+       elementsBoxes.forEach((elementBox) -> {
+           elementBox.updateInfo();
+           elementBox.updateImage();
+           mapGrid.add(elementBox.getVBox(),
+                   elementBox.getElementPosition().getX() + toAddX,
+                   elementBox.getElementPosition().getY() + toAddY);
+       });
     }
 
     private void drawBounds(Boundary bounds, int toAddX, int toAddY) {

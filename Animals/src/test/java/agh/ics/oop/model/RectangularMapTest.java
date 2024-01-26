@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -160,9 +161,9 @@ class RectangularMapTest {
 
 
         //then
-        assertEquals(animal1, map.objectAt(animal1Vector));
-        assertEquals(animal2, map.objectAt(animal2Vector));
-        assertNull(map.objectAt(new Vector2d(1,1)));
+        assertEquals(animal1, map.objectAt(animal1Vector).get());
+        assertEquals(animal2, map.objectAt(animal2Vector).get());
+        assertEquals(Optional.empty(),map.objectAt(new Vector2d(1,1)));
     }
 
 }

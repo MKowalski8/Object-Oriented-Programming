@@ -5,20 +5,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
             fx:controller="agh.ics.oop.presenter.StartPresenter">
-    <top>
-        <TextField fx:id="textField"/>
-    </top>
     <center>
-        <Label fx:id="infoLabel"
-               text="All animals will be living here!"
-               textAlignment="CENTER"/>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Label text="Write moves: "/>
+                <TextField fx:id="textField" maxWidth="200" />
+            </HBox>
+            <Button onAction="#onSimulationStartClicked" text="Start" textAlignment="CENTER"/>
+        </VBox>
     </center>
-    <bottom>
-        <Button onAction="#onSimulationStartClicked" text="Start" textAlignment="CENTER"/>
-    </bottom>
 </BorderPane>
 
