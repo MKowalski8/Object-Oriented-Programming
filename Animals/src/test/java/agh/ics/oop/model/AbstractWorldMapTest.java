@@ -35,15 +35,11 @@ class AbstractWorldMapTest {
 
         //when
         List <Animal> animals = map.getOrderedAnimal();
-
+        List<Animal> expectedAnimals = List.of(animal4, animal3, animal5, animal1, animal2);
 
         //then
 //        animals.forEach((animal -> System.out.println(animal.getPosition())));
-        assertEquals(animal4, animals.get(0));
-        assertEquals(animal3, animals.get(1));
-        assertEquals(animal5, animals.get(2));
-        assertEquals(animal1, animals.get(3));
-        assertEquals(animal2, animals.get(4));
+        assertEquals(expectedAnimals, animals);
         assertNotEquals(animal2, animals.get(0));
     }
 }

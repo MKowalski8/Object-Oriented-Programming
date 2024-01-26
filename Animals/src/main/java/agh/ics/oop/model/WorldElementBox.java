@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 
 public class WorldElementBox {
 
-    @FXML
     private ImageView imageView;
 
     @FXML
@@ -24,10 +23,10 @@ public class WorldElementBox {
     public WorldElementBox(WorldElement element) {
         this.element = element;
         initializeImageView();
-        setVBox();
+        configureVBox();
     }
 
-    private void setVBox() {
+    private void configureVBox() {
         vBox.getChildren().addAll(imageView, info);
         vBox.setAlignment(Pos.CENTER);
     }
@@ -39,18 +38,16 @@ public class WorldElementBox {
         imageView.setFitWidth(20);
     }
 
-    private void updateInfo() {
+    public void updateInfo() {
         info.setText(element.getInfo());
     }
 
-    private void updateImage() {
+    public void updateImage() {
         Image image = new Image(String.valueOf(getClass().getResource(element.getImageURL())));
         imageView.setImage(image);
     }
 
     public VBox getVBox() {
-        updateInfo();
-        updateImage();
         return vBox;
     }
 

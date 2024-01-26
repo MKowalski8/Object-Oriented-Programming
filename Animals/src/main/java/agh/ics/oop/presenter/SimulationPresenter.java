@@ -78,6 +78,8 @@ public class SimulationPresenter implements MapChangeListener {
 
     private void drawMapElements(int toAddX, int toAddY) {
        elementsBoxes.forEach((elementBox) -> {
+           elementBox.updateInfo();
+           elementBox.updateImage();
            mapGrid.add(elementBox.getVBox(),
                    elementBox.getElementPosition().getX() + toAddX,
                    elementBox.getElementPosition().getY() + toAddY);

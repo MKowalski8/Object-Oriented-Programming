@@ -24,7 +24,7 @@ public class GrassField extends AbstractWorldMap {
     @Override
     public Optional<WorldElement> objectAt(Vector2d position) {
         Optional<WorldElement> worldElement = super.objectAt(position);
-        return worldElement.isPresent() ? worldElement : Optional.ofNullable(grass.get(position));
+        return worldElement.or(() -> Optional.ofNullable(grass.get(position)));
     }
 
     @Override
@@ -37,10 +37,10 @@ public class GrassField extends AbstractWorldMap {
     @Override
     public Boundary getCurrentBounds() {
         List<WorldElement> worldElements = getElements();
-        Vector2d maxVector = new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
-        Vector2d minVector = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
+        Vector2d maxVector = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        Vector2d minVector = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-        for(WorldElement worldElement : worldElements){
+        for (WorldElement worldElement : worldElements) {
             minVector = minVector.lowerLeft(worldElement.getPosition());
             maxVector = maxVector.upperRight(worldElement.getPosition());
         }

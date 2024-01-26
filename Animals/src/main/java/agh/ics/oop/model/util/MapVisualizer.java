@@ -77,12 +77,7 @@ public class MapVisualizer {
     }
 
     private String drawObject(Vector2d currentPosition) {
-        if (this.map.isOccupied(currentPosition)) {
-            Optional<WorldElement> object = this.map.objectAt(currentPosition);
-            if (object.isPresent()) {
-                return object.get().toString();
-            }
-        }
-        return EMPTY_CELL;
+        return this.map.objectAt(currentPosition).map(Object::toString)
+                .orElse(EMPTY_CELL);
     }
 }
