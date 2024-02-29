@@ -1,8 +1,4 @@
-# PO_2023_SRO1820_KOWALSKI
-i. Maksymilian Kowalski
+# Object-oriented programming course AGH UST 
 
-ii. Grupa nr 1, godzina 18:20
-
-iii. Rachpin
-
-iv. https://gitexercises.fracz.com/committer/a43e8f60803b92073c4ab46246c6bf8a65a9ac1c
+Instructions for individual labs can be found at this link:
+-  https://github.com/Soamid/obiektowe-lab/tree/master
